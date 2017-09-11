@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements CallbackUI, View.
     private static View view = null;
 
     private VolleyCore volleyCore = null;
+
+    private ProgressBar progressBar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements CallbackUI, View.
             }
             break;
             case "img": {
+
                 Bitmap bitmap = (Bitmap) responseData;
                 img.setImageBitmap(bitmap);
             }
@@ -105,12 +109,13 @@ public class MainActivity extends AppCompatActivity implements CallbackUI, View.
         get.setOnClickListener(this);
         download.setOnClickListener(this);
         view = findViewById(R.id.main);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
     }
 
     @Override
     public void onClick(View v) {
-
+            startProgressBar();
         switch (v.getId()) {
             case R.id.post: {
 
@@ -125,12 +130,12 @@ public class MainActivity extends AppCompatActivity implements CallbackUI, View.
             break;
             case R.id.get: {
                 setSnackbar("get");
-                volleyCore.get("http://192.168.1.106:8080/ser");
+                volleyCore.get("http://192.168.1.106:8080/ser?name=xcy&age=25");
             }
             break;
             case R.id.download: {
                 setSnackbar("down");
-                volleyCore.downloadImg("");
+                volleyCore.downloadImg("http://ww1.sinaimg.cn/mw690/c2c699f3jw1esmfey04hsj20dw08owf2.jpg");
             }
             break;
 
@@ -153,6 +158,23 @@ public class MainActivity extends AppCompatActivity implements CallbackUI, View.
         snackbar.setText(msg);
         snackbar.show();
 
+    }
+
+
+    /**
+     * 显示环形加载条
+     **/
+
+    public void startProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 关闭环形加载条
+     **/
+    public void cancelProgressBar() {
+
+        progressBar.setVisibility(View.GONE);
     }
 
 

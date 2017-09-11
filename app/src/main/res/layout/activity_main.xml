@@ -8,7 +8,6 @@
     android:id="@+id/main"
     tools:context="nantian.com.volleydeom.MainActivity">
 
-
     <Button
         android:id="@+id/post"
         android:layout_width="wrap_content"
@@ -36,5 +35,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/img" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        />
 
 </LinearLayout>

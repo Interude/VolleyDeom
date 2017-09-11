@@ -12,6 +12,7 @@ import com.android.volley.toolbox.StringRequest;
 
 import java.util.Map;
 
+import nantian.com.volleydeom.MainActivity;
 import nantian.com.volleydeom.callback.CallbackUI;
 
 /**
@@ -38,7 +39,7 @@ public class VolleyCore {
 
     private VolleyCore(CallbackUI callbackUI, RequestQueue queue) {
         this.callbackUI = callbackUI;
-
+        this.queue = queue;
     }
 
 
@@ -66,14 +67,15 @@ public class VolleyCore {
             @Override
             public void onResponse(String response) {
                 /**请求成功回调界面**/
-
+                MainActivity.instance.cancelProgressBar();
+                callbackUI.upDataUI(response,GET);
 
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                MainActivity.instance.cancelProgressBar();
             }
         });
 
@@ -91,12 +93,14 @@ public class VolleyCore {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                MainActivity.instance.cancelProgressBar();
+                callbackUI.upDataUI(response,POST);
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                MainActivity.instance.cancelProgressBar();
             }
         }) {
             @Override
@@ -128,14 +132,15 @@ public class VolleyCore {
         ImageRequest request = new ImageRequest(url, new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap response) {
-
+                MainActivity.instance.cancelProgressBar();
+                callbackUI.upDataUI(response,IMG);
 
 
             }
         }, 0, 0, null, Bitmap.Config.ARGB_8888, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                MainActivity.instance.cancelProgressBar();
             }
         });
 
